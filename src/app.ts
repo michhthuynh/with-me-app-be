@@ -2,21 +2,33 @@ import * as express from 'express'
 import { Response, Request, NextFunction } from 'express'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import connectionDatabase from './configs/database'
+import * as mongoose from 'mongoose'
+import connectDatabase from './configs/db.config'
+import router from './routes/router'
 
-const port: Number = parseInt(process.env.PORT) || 5000
-
+const port = process.env.PORT || 3000
 const app = express()
 dotenv.config()
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-connectionDatabase()
+app.use('/api', router)
 
 app.get('/', (req: Request, res: Response) => {
-    console.log(process.env.test)
-    res.send("test")
+    res.json({
+        message: "Server is running..."
+    })
 })
+
+app.get('*', (req: Request, res: Response) => {
+    res.json({
+        message: "Server is running..."
+    })
+})
+connectDatabase()
 
 app.listen(port, () => {
     console.log('server is running')
 })
+
