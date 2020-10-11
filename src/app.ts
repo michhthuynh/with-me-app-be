@@ -2,7 +2,6 @@ import * as express from 'express'
 import { Response, Request, NextFunction } from 'express'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import * as mongoose from 'mongoose'
 import connectDatabase from './configs/db.config'
 import router from './routes/router'
 
