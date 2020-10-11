@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose'
 import { Schema } from 'mongoose'
 
+
 const userSchema: Schema = new Schema({
     username: {
         required: true,
@@ -8,12 +9,22 @@ const userSchema: Schema = new Schema({
     },
     email: {
         required: true,
-        type: String
+        type: String,
     },
     password: {
         required: true,
         type: String
+    },
+    root: {
+        required: true,
+        type: Boolean
+    },
+    premium: {
+        required: true,
+        type: Boolean
     }
 })
 
-export default mongoose.model('User', userSchema)
+const userModel = mongoose.model('User', userSchema)
+
+export default userModel
