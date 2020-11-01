@@ -4,10 +4,12 @@ import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
 import connectDatabase from './configs/db.config'
 import router from './routes/router'
+import * as cors from 'cors'
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 const app = express()
 dotenv.config()
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

@@ -6,6 +6,13 @@ import userModel from "../models/Credentials/user.model";
 const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body
 
+    if (username == undefined || password == undefined) {
+        res.status(400).json({
+            message: "Username or Password is invalid"
+        })
+        return
+    }
+
     if (!validator.isLength(username, { min: 10, max: 26 })) {
         res.status(400).json({
             message: "Username is invalid"

@@ -4,7 +4,7 @@ import { sign } from "jsonwebtoken";
 const postLogin = (req: Request, res: Response) => {
     const { username, password } = req.body
 
-    sign({ username }, process.env.SECRET_STRING, (err, token) => {
+    sign({ username }, process.env.SECRET_STRING, { expiresIn: '24h' }, (err, token) => {
         res.json({
             token
         })
