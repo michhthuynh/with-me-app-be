@@ -6,11 +6,27 @@ import { genSalt, hash } from 'bcrypt'
 
 const postSignUp = async (req: Request, res: Response) => {
     const { username, password, email } = req.body
+    const fullName = req.body.full_name
 
     // validate fields
     if (!validator.isLength(username, { min: 10, max: 26 })) {
         res.status(400).json({
             message: "Username is invalid"
+        })
+        return
+    }
+
+    if (!validator.isLength(fullName, { min: 10, max: 26 })) {
+        res.status(400).json({
+            message: "Full name is invalid"
+        })
+        return
+    }
+
+    const maskFullName = fullName.replace(' ', '')
+    if (!validator.isAlpha(maskFullName)) {
+        res.status(400).json({
+            message: "Full name is invalid"
         })
         return
     }
@@ -57,14 +73,13 @@ const postSignUp = async (req: Request, res: Response) => {
         if (err) throw err
         hash(password, salt, async (error, passwordHash) => {
             if (error) throw error
-
-
             userModel.create({
                 username,
                 password: passwordHash,
                 email,
                 premium: false,
-                root: false
+                root: false,
+                full_name: fullName,
             })
                 .then(data => {
                     console.log(`Create account successfully: ${data}`)
